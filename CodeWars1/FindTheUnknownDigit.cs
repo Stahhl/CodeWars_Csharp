@@ -6,6 +6,7 @@ namespace CodeWars1
 {
     class FindTheUnknownDigit
     {
+        //https://www.codewars.com/kata/find-the-unknown-digit/train/csharp
         public static int SolveExpression(string expression)
         {
             //Write code to determine the missing digit or unknown rune
@@ -55,21 +56,22 @@ namespace CodeWars1
                     //00 -> 0
                     //leading zero -> skip
                     if(i == 0 && (
-                        (num1[0] == '?' && num1[1] == '?') || 
-                        (num2[0] == '?' && num2[1] == '?') || 
-                        (num3[0] == '?' && num3[1] == '?')))
+                        (LeadingZero(num1) == false) || 
+                        (LeadingZero(num2) == false) || 
+                        (LeadingZero(num3) == false)))
                         continue;
 
-                    //1x11=11
-                    //test is wrong ?:<
-                    //1 -> skip
-                    //if (i == 1)
-                    //    continue;
-
+                    //11x?=11
+                    //cant be 1 because that digit is already in the equation
+                    if (ExistingNumber(num1, i) == false ||
+                        ExistingNumber(num2, i) == false ||
+                        ExistingNumber(num3, i) == false)
+                        continue;
 
                     int x = int.Parse(num1.Replace("?", i.ToString()));
                     int y = int.Parse(num2.Replace("?", i.ToString()));
                     int z = int.Parse(num3.Replace("?", i.ToString()));
+
 
                     if (EvaluateOpperator(x, y, opp) == z)
                         return i;
@@ -82,6 +84,30 @@ namespace CodeWars1
                 return -1;
             }
         }
+        private static bool ExistingNumber(string num, int i)
+        {
+            foreach (var c in num)
+            {
+                if(int.TryParse(c.ToString(), out int result) == true &&
+                    result == i)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        private static bool LeadingZero(string num)
+        {
+            if(num.Length > 1 &&
+                num[0] == '?' &&
+                num[1] == '?')
+            {
+                return false;
+            }
+
+            return true;
+        }
         private static int EvaluateOpperator(int x, int y, string opp)
         {
             return opp == "+" ? x + y :
@@ -93,6 +119,16 @@ namespace CodeWars1
         [TestFixture]
         public class RunesTest
         {
+            //[Test]
+            //public void Test10()
+            //{
+            //    Assert.AreEqual(1, SolveExpression("1+0=?"), "Answer for expression '1+0=?' ");
+            //}
+            //[Test]
+            //public void Test9()
+            //{
+            //    Assert.AreEqual(0, SolveExpression("0+0=?"), "Answer for expression '0+0=?' ");
+            //}
             [Test]
             public void Test1()
             {
