@@ -14,21 +14,21 @@ namespace CodeWars1
             //(number)[opperator](number)=(number)
             //Unknown digit will not be the same as any other digits used in expression
 
-            char[] opperators = new char[] { '+', '-', '*', '/' };
-            bool hasOpp = false;
+            char[] operators = new char[] { '+', '-', '*', '/' };
+            bool hasOperator = false;
             bool hasEqual = false;
 
             string num1 = string.Empty;
-            string opp = string.Empty;
+            string op = string.Empty;
             string num2 = string.Empty;
             string num3 = string.Empty;
 
             for (int i = 0; i < expression.Length; i++)
             {
-                if (opperators.Contains(expression[i]) && i > 0 && hasOpp == false)
+                if (operators.Contains(expression[i]) && i > 0 && hasOperator == false)
                 {
-                    opp = expression[i].ToString();
-                    hasOpp = true;
+                    op = expression[i].ToString();
+                    hasOperator = true;
                 }
                 else if (expression[i] == '=')
                 {
@@ -36,16 +36,16 @@ namespace CodeWars1
                 }
                 else
                 {
-                    if (hasOpp == false && hasEqual == false)
+                    if (hasOperator == false && hasEqual == false)
                         num1 += expression[i];
-                    if (hasOpp == true && hasEqual == false)
+                    if (hasOperator == true && hasEqual == false)
                         num2 += expression[i];
-                    if (hasOpp == true && hasEqual == true)
+                    if (hasOperator == true && hasEqual == true)
                         num3 += expression[i];
                 }
             }
 
-            return EvaluateExpression(num1, num2, num3, opp);
+            return EvaluateExpression(num1, num2, num3, op);
         }
         private static int EvaluateExpression(string num1, string num2, string num3, string opp)
         {
