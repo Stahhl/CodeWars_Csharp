@@ -20,7 +20,6 @@ namespace CodeWars1
             }
             return loop;
         }
-
         [TestFixture]
         public class PersistTests
         {

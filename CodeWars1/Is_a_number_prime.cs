@@ -7,14 +7,14 @@ namespace CodeWars1
     class Is_a_number_prime
     {
         //https://stackoverflow.com/questions/15743192/check-if-number-is-prime-number/15743238#15743238
-        public static bool IsPrime(int n)
+        public static bool IsPrime(long n)
         {
             if (n == 2) return true;
             if (n <= 1 || n % 2 == 0) return false;
 
-            var boundary = (int)Math.Floor(Math.Sqrt(n));
+            var boundary = (long)Math.Floor(Math.Sqrt(n));
 
-            for (int i = 3; i <= boundary; i += 2)
+            for (long i = 3; i <= boundary; i += 2)
                 if (n % i == 0)
                     return false;
 
@@ -24,18 +24,31 @@ namespace CodeWars1
         [TestFixture]
         public class SolutionTest
         {
-            private static IEnumerable<TestCaseData> sampleTestCases
+            [Test]
+            public void Test1()
             {
-                get
-                {
-                    yield return new TestCaseData(0).Returns(false);
-                    yield return new TestCaseData(1).Returns(false);
-                    yield return new TestCaseData(2).Returns(true);
-                }
+                Assert.AreEqual(false, IsPrime(0));
             }
-
-            [Test, TestCaseSource("sampleTestCases")]
-            public bool SampleTest(int n) => IsPrime(n);
+            [Test]
+            public void Test2()
+            {
+                Assert.AreEqual(false, IsPrime(1));
+            }
+            [Test]
+            public void Test3()
+            {
+                Assert.AreEqual(true, IsPrime(2));
+            }
+            [Test]
+            public void Test4()
+            {
+                Assert.AreEqual(true, IsPrime(2147483647));
+            }
+            [Test]
+            public void Test5()
+            {
+                Assert.AreEqual(false, IsPrime(9223372036854775807));
+            }
         }
     }
 }

@@ -56,16 +56,16 @@ namespace CodeWars1
                     //00 -> 0
                     //leading zero -> skip
                     if(i == 0 && (
-                        (LeadingZero(num1) == false) || 
-                        (LeadingZero(num2) == false) || 
-                        (LeadingZero(num3) == false)))
+                        (LeadingZero(num1) == true) || 
+                        (LeadingZero(num2) == true) || 
+                        (LeadingZero(num3) == true)))
                         continue;
 
                     //11x?=11
                     //cant be 1 because that digit is already in the equation
-                    if (ExistingNumber(num1, i) == false ||
-                        ExistingNumber(num2, i) == false ||
-                        ExistingNumber(num3, i) == false)
+                    if (num1.Contains(i.ToString()) == true ||
+                        num2.Contains(i.ToString()) == true ||
+                        num3.Contains(i.ToString()) == true)
                         continue;
 
                     int x = int.Parse(num1.Replace("?", i.ToString()));
@@ -84,29 +84,14 @@ namespace CodeWars1
                 return -1;
             }
         }
-        private static bool ExistingNumber(string num, int i)
-        {
-            foreach (var c in num)
-            {
-                if(int.TryParse(c.ToString(), out int result) == true &&
-                    result == i)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
         private static bool LeadingZero(string num)
         {
-            if(num.Length > 1 &&
-                num[0] == '?' &&
-                num[1] == '?')
+            if (num.Length > 1 && num [0] == '?')
             {
-                return false;
+                return true;
             }
 
-            return true;
+            return false;
         }
         private static int EvaluateOpperator(int x, int y, string opp)
         {
@@ -124,11 +109,11 @@ namespace CodeWars1
             //{
             //    Assert.AreEqual(1, SolveExpression("1+0=?"), "Answer for expression '1+0=?' ");
             //}
-            //[Test]
-            //public void Test9()
-            //{
-            //    Assert.AreEqual(0, SolveExpression("0+0=?"), "Answer for expression '0+0=?' ");
-            //}
+            [Test]
+            public void Test9()
+            {
+                Assert.AreEqual(1, SolveExpression("50*2=?00"), "Answer for expression '50*2=?00' ");
+            }
             [Test]
             public void Test1()
             {
